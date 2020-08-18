@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ActionUser from "./ActionUser";
+import ActionUser from "./EditTableDataRow/ActionUser";
 import dbCountry from "../../AddUser/dbCountry.json";
 import EditTableDataRow from "./EditTableDataRow";
 
@@ -11,17 +11,20 @@ class TableDataRow extends Component {
       isDelete: false,
       dbCountry: dbCountry
     };
-    this.isEdit = this.isEdit.bind(this);
-    this.isDelete = this.isDelete.bind(this);
   }
-  isEdit = () => {
-    this.setState({
-      isEdit: !this.state.isEdit
+  isEdit = (dl) => {
+    this.setState(state => {
+      return {
+        isEdit: !state.isEdit
+      };
     });
+    console.log("hi "+dl.first_name);
   };
   isDelete = () => {
-    this.setState({
-      isDelete: !this.state.isDelete
+    this.setState(state => {
+      return {
+        isDelete: !state.isDelete
+      };
     });
   };
   ShowTableDataRow() {
@@ -34,18 +37,19 @@ class TableDataRow extends Component {
           <td className="align-middle">{this.props.dataUser.telephone}</td>
           <td className="align-middle">{this.props.dataUser.country}</td>
           <td className="align-middle">
-            <ActionUser isEdit={this.isEdit} isDelete={this.isDelete} />
+            <ActionUser stateEdit={this.state.isEdit} isEdit={(dl)=>this.isEdit(dl)} isDelete={this.isDelete} />
           </td>
         </tr>
       );
     } else {
       return (
         <EditTableDataRow
-          isEdit={this.isEdit}
+          isEdit={(dl)=>this.isEdit(dl)}
           isDelete={this.isDelete}
           stt={this.props.stt}
           dataUser={this.props.dataUser}
           dbCountry={this.state.dbCountry}
+          stateEdit={this.state.isEdit}
         />
       );
     }

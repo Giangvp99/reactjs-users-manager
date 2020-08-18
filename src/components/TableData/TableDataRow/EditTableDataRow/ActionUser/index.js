@@ -4,23 +4,17 @@ class ActionUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isEdit: true
+      isEdit: this.props.stateEdit
     };
   }
-  Edit() {
-    this.setState({
-      isEdit: !this.state.isEdit
-    });
-    this.props.isEdit();
-  }
   ShowActionUser() {
-    if (this.state.isEdit) {
+    if (!this.state.isEdit) {
       return (
         <div className="btn-group" role="group" aria-label="Basic example">
           <button
             type="button"
             className="btn btn-warning"
-            onClick={() => this.Edit()}
+            onClick={this.props.isEdit}
           >
             Edit
           </button>
@@ -34,16 +28,15 @@ class ActionUser extends Component {
         </div>
       );
     } else {
+      console.log(this.props.data);
       return (
-        <div className="btn-group" role="group" aria-label="Basic example">
-          <button
-            type="button"
-            className="btn btn-warning"
-            onClick={(() => this.Edit(), () => this.Edit())}
-          >
-            Save
-          </button>
-        </div>
+        <button
+          type="button"
+          className="btn btn-primary w-100"
+          onClick={() => this.props.isEdit(this.props.data)}
+        >
+          Save
+        </button>
       );
     }
   }
