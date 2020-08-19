@@ -21,14 +21,13 @@ class ActionUser extends Component {
           <button
             type="button"
             className="btn btn-danger"
-            onClick={() => this.props.isDelete()}
+            onClick={dl=>this.props.deleteUser(dl)}
           >
             Delete
           </button>
         </div>
       );
     } else {
-      console.log(this.props.data);
       return (
         <button
           type="button"

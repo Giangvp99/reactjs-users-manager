@@ -11,31 +11,49 @@ class App extends Component {
     super(props);
     this.state = {
       db: db,
-      dbTableData: db
+      textSearch: ""
     };
-    this.AddNewUser=this.AddNewUser.bind(this);
+    this.AddNewUser = this.AddNewUser.bind(this);
   }
   GetFirstName(dl) {
-    let users = this.state.db.filter(
-      user => user.first_name.indexOf(dl) !== -1
-    );
-    this.setState({
-      dbTableData: users
-    });
+    if (dl !== undefined) {
+      this.setState({
+        textSearch: dl
+      });
+    }
   }
   AddNewUser(user) {
     this.setState({
-      db:[
-        ...this.state.db, 
-        user
-      ], 
-      dbTableData:[
-        ...this.state.db, 
-        user
-      ]
-    })
+      db: [...this.state.db, user]
+    });
+  }
+  GetUserEdit(dl) {
+    if (dl.id !== undefined) {
+      let index = this.state.db.findIndex(user => user.id === dl.id);
+      this.setState({
+        db: [
+          ...this.state.db.slice(0, index),
+          {
+            ...dl
+          },
+          ...this.state.db.slice(index + 1)
+        ]
+      });
+    }
+  }
+  DeleteUser(dl) {
+    if (dl.id !== undefined) {
+      let index = this.state.db.findIndex(user => user.id === dl.id);
+      this.setState({
+        db: [...this.state.db.slice(0, index), ...this.state.db.slice(index + 1)]
+      });
+    }
   }
   render() {
+    let users = [];
+    users = this.state.db.filter(
+      user => user.first_name.indexOf(this.state.textSearch) !== -1
+    );
     return (
       <div className="App">
         <Header />
@@ -44,8 +62,12 @@ class App extends Component {
             <Search getFirstName={dl => this.GetFirstName(dl)} />
           </div>
           <div className="row">
-            <TableData data={this.state.dbTableData} />
-            <AddUser addNewUser={this.AddNewUser}/>
+            <TableData
+              data={users}
+              getUserEdit={dl => this.GetUserEdit(dl)}
+              deleteUser={dl => this.DeleteUser(dl)}
+            />
+            <AddUser addNewUser={this.AddNewUser} />
           </div>
         </div>
       </div>

@@ -6,7 +6,7 @@ class EditTableDataRow extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: {}
+      data: this.props.dataUser
     };
   }
   isChange(event) {
@@ -14,6 +14,7 @@ class EditTableDataRow extends Component {
     let value = event.target.value;
     this.setState({
       data:{
+        ...this.state.data, 
         [name]:value
       }
     });
@@ -24,7 +25,7 @@ class EditTableDataRow extends Component {
         <td className="align-middle">{this.props.stt}</td>
         <td className="align-middle">
           <input
-            name="fFirstName"
+            name="first_name"
             type="text"
             defaultValue={this.props.dataUser.first_name}
             style={{
@@ -39,7 +40,7 @@ class EditTableDataRow extends Component {
         </td>
         <td className="align-middle">
           <input
-            name="fLastName"
+            name="last_name"
             type="text"
             defaultValue={this.props.dataUser.last_name}
             style={{
@@ -53,7 +54,7 @@ class EditTableDataRow extends Component {
         </td>
         <td className="align-middle">
           <input
-            name="fTelephone"
+            name="telephone"
             type="text"
             defaultValue={this.props.dataUser.telephone}
             style={{
@@ -68,7 +69,7 @@ class EditTableDataRow extends Component {
         <td className="align-middle">
           <select
             className="custom-select"
-            name="fCountry"
+            name="country"
             onChange={event => this.isChange(event)}
           >
             <option defaultValue>{this.props.dataUser.country}</option>

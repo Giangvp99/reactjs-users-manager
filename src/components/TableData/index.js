@@ -17,7 +17,13 @@ class TableData extends Component {
         </thead>
         <tbody>
           {this.props.data.map((value, key) => (
-            <TableDataRow key={key} dataUser={value} stt={key+1}/>
+            <TableDataRow
+              key={key}
+              dataUser={value}
+              stt={key + 1}
+              getUserEdit={dl => this.props.getUserEdit(dl)}
+              deleteUser={() => this.props.deleteUser(value)}
+            />
           ))}
         </tbody>
       </table>

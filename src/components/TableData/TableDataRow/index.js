@@ -8,24 +8,16 @@ class TableDataRow extends Component {
     super(props);
     this.state = {
       isEdit: false,
-      isDelete: false,
       dbCountry: dbCountry
     };
   }
-  isEdit = (dl) => {
+  isEdit = dl => {
     this.setState(state => {
       return {
         isEdit: !state.isEdit
       };
     });
-    console.log("hi "+dl.first_name);
-  };
-  isDelete = () => {
-    this.setState(state => {
-      return {
-        isDelete: !state.isDelete
-      };
-    });
+    this.props.getUserEdit(dl);
   };
   ShowTableDataRow() {
     if (!this.state.isEdit) {
@@ -37,15 +29,18 @@ class TableDataRow extends Component {
           <td className="align-middle">{this.props.dataUser.telephone}</td>
           <td className="align-middle">{this.props.dataUser.country}</td>
           <td className="align-middle">
-            <ActionUser stateEdit={this.state.isEdit} isEdit={(dl)=>this.isEdit(dl)} isDelete={this.isDelete} />
+            <ActionUser
+              stateEdit={this.state.isEdit}
+              isEdit={dl => this.isEdit(dl)}
+              deleteUser={(dl)=>this.props.deleteUser(dl)}
+            />
           </td>
         </tr>
       );
     } else {
       return (
         <EditTableDataRow
-          isEdit={(dl)=>this.isEdit(dl)}
-          isDelete={this.isDelete}
+          isEdit={dl => this.isEdit(dl)}
           stt={this.props.stt}
           dataUser={this.props.dataUser}
           dbCountry={this.state.dbCountry}

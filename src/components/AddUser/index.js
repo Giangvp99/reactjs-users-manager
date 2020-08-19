@@ -3,6 +3,8 @@ import dbCountry from "./dbCountry.json";
 import SelectCountry from "./SelectCountry";
 import ActionSelect from "./ActionSelect";
 
+const shortid=require('shortid');
+
 class AddUser extends Component {
   constructor(props) {
     super(props);
@@ -27,6 +29,7 @@ class AddUser extends Component {
   }
   NewUser() {
     let user = {};
+    user.id=shortid.generate();
     user.first_name = this.state.fFirstName;
     user.last_name = this.state.fLastName;
     user.telephone = this.state.fTelephon;
